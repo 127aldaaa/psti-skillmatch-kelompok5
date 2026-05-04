@@ -3,7 +3,7 @@ session_start();
 
 // Inisialisasi session admin
 if (!isset($_SESSION['user'])) {
-    $_SESSION['user'] = 'Admin PSTI';
+    $_SESSION['user'] = 'Admin';
 }
 $adminName = $_SESSION['user'];
 
