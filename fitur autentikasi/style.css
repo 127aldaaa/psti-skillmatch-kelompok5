@@ -1,0 +1,74 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f2f2f2;
+}
+
+/* container utama */
+.container {
+  width: 800px;
+  height: 550px;
+  margin: 200px auto;
+  display: flex;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* kiri (gambar) */
+.left {
+  width: 55%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.left img {
+  width: 110%;
+}
+
+/* kanan (form) */
+.right {
+  width: 60%;
+  padding: 40px;
+  background: white;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* form */
+label {
+  display: block;
+  margin-top: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  background: #1877f2;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0d65d9;
+}
+
+.error {
+  color: red;
+  text-align: center;
+}
