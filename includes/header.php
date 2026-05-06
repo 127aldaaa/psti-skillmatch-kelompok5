@@ -17,7 +17,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="<?php echo url('assets/css/style.css'); ?>">
+    <link rel="stylesheet" href="<?php echo url('assets/css/admin.css'); ?>">
 </head>
 <body>
 
@@ -38,7 +38,7 @@
             
             <div class="menu-label">Manajemen Data</div>
             <a href="#" class="menu-item"><i class="fa-solid fa-bullseye"></i> Data Peminatan</a>
-            <a href="#" class="menu-item"><i class="fa-solid fa-code"></i> Data Skill</a>
+            <a href="../../views/skill/index.php" class="menu-item"><i class="fa-solid fa-code"></i> Data Skill</a>
             <a href="#" class="menu-item"><i class="fa-solid fa-file-lines"></i> Soal Tes Minat & Bakat</a>
             <a href="#" class="menu-item"><i class="fa-solid fa-graduation-cap"></i> Kursus / Pelatihan</a>
             

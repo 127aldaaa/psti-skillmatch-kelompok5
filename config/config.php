@@ -9,8 +9,7 @@ if (session_status() === PHP_SESSION_NONE) {
 // Dapatkan base path dinamis untuk memudahkan di localhost
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
 $host = $_SERVER['HTTP_HOST'];
-$base_dir = str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
-$base_url = $protocol . "://" . $host . $base_dir;
+$base_url = $protocol . "://" . $host;
 
 // Konfigurasi Umum
 define('BASE_URL', $base_url);

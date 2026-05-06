@@ -4,12 +4,12 @@ require_once '../../functions/helper.php';
 require_once '../../functions/skill.php';
 
 // Cek apakah ada ID yang dikirim
-if (!isset($_GET['id'])) {
+if (!isset($_GET['id_skill'])) {
     header("Location: index.php");
     exit;
 }
 
-$id = $_GET['id'];
+$id = sanitizeInput($_GET['id_skill']);
 $skill = getSkillById($id);
 
 // Jika data tidak ditemukan, kembalikan ke index

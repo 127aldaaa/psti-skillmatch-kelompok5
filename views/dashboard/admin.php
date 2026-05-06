@@ -1,4 +1,7 @@
 <?php
+require_once '../../config/config.php';
+require_once '../../functions/helper.php';
+
 session_start();
 
 // Inisialisasi session admin
@@ -610,11 +613,11 @@ $dateRange = "25 Mei - 1 Juni 2025";
         </div>
         
         <div class="sidebar-menu">
-            <a href="#" class="menu-item active"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+            <a href="admin.php" class="menu-item active"><i class="fa-solid fa-gauge"></i> Dashboard</a>
             
             <div class="menu-label">Manajemen Data</div>
             <a href="#" class="menu-item"><i class="fa-solid fa-bullseye"></i> Data Peminatan</a>
-            <a href="#" class="menu-item"><i class="fa-solid fa-code"></i> Data Skill</a>
+            <a href="../skill/index.php" class="menu-item"><i class="fa-solid fa-code"></i> Data Skill</a>
             <a href="#" class="menu-item"><i class="fa-solid fa-file-lines"></i> Soal Tes Minat & Bakat</a>
             <a href="#" class="menu-item"><i class="fa-solid fa-graduation-cap"></i> Kursus / Pelatihan</a>
             
@@ -628,7 +631,7 @@ $dateRange = "25 Mei - 1 Juni 2025";
         </div>
         
         <div class="sidebar-footer">
-            <a href="#" class="logout-btn">
+            <a href="../../logout.php" class="logout-btn">
                 <i class="fa-solid fa-right-from-bracket"></i> Logout
             </a>
         </div>
@@ -641,11 +644,15 @@ $dateRange = "25 Mei - 1 Juni 2025";
         <nav class="navbar">
             <div class="nav-title">Dashboard</div>
             <div class="nav-right">
-                <div class="nav-date"><i class="fa-regular fa-calendar" style="margin-right: 6px;"></i> <?php echo $dateRange; ?></div>
+                <div class="nav-date">
+                    <i class="fa-regular fa-calendar" style="margin-right: 6px;"></i> 
+                    <?php echo $dateRange; ?>
+                </div>
                 <div class="nav-notification">
                     <i class="fa-regular fa-bell"></i>
                     <span class="badge">3</span>
                 </div>
+                <!-- User Avatar -->
                 <div style="width: 40px; height: 40px; background: var(--primary-dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 2px solid #e2e8f0; cursor: pointer;">
                     A
                 </div>
