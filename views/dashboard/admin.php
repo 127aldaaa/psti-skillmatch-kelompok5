@@ -613,7 +613,7 @@ $dateRange = "25 Mei - 1 Juni 2025";
         </div>
         
         <div class="sidebar-menu">
-            <a href="admin.php" class="menu-item active"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+            <a href="dashboard/admin.php" class="menu-item active"><i class="fa-solid fa-gauge"></i> Dashboard</a>
             
             <div class="menu-label">Manajemen Data</div>
             <a href="#" class="menu-item"><i class="fa-solid fa-bullseye"></i> Data Peminatan</a>
