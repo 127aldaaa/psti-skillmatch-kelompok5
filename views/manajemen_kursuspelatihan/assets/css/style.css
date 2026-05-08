@@ -1,0 +1,15 @@
+body {
+  background-color: #f8f9fc;
+}
+
+.sidebar a {
+  color: white;
+  display: block;
+  padding: 8px;
+  text-decoration: none;
+}
+
+.sidebar a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+}
