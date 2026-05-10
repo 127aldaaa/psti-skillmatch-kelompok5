@@ -1,0 +1,244 @@
+/* RESET */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* BODY */
+
+body {
+  background: linear-gradient(135deg, #dbeafe, #eff6ff);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+  width: 260px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: linear-gradient(180deg, #1e3a8a, #2563eb);
+  padding: 30px 20px;
+  color: white;
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* LOGO */
+
+.logo {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 50px;
+  letter-spacing: 1px;
+}
+
+.logo span {
+  color: #bfdbfe;
+}
+
+/* MENU */
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.menu a {
+  text-decoration: none;
+  color: white;
+  padding: 15px;
+  border-radius: 12px;
+  transition: 0.3s;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.menu a:hover {
+  background: white;
+  color: #2563eb;
+  transform: translateX(5px);
+}
+
+/* MAIN */
+
+.main {
+  width: 100%;
+  min-height: 100vh;
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+}
+
+.topbar {
+  text-align: center;
+  margin-bottom: 35px;
+  margin-top: 20px;
+}
+
+.topbar h1 {
+  font-size: 42px;
+  color: #1e293b;
+  margin-bottom: 10px;
+}
+
+.topbar p {
+  color: #64748b;
+  font-size: 18px;
+}
+
+/* ADMIN PROFILE */
+
+.admin-profile {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 12px 20px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-weight: bold;
+  color: #1e3a8a;
+}
+
+/* CARD */
+
+.card {
+  background: rgba(255, 255, 255, 0.85);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* BUTTON TAMBAH */
+
+.btn-tambah {
+  display: inline-block;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+  padding: 13px 22px;
+  border-radius: 12px;
+  text-decoration: none;
+  margin-bottom: 25px;
+  font-weight: bold;
+  transition: 0.3s;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.btn-tambah:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+}
+
+/* TABLE */
+
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+table th {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+  padding: 18px;
+  text-align: left;
+  font-size: 15px;
+}
+
+table td {
+  padding: 18px;
+  border-bottom: 1px solid #e5e7eb;
+  color: #334155;
+}
+
+table tr:hover {
+  background: #f8fafc;
+  transition: 0.2s;
+}
+
+/* BADGE */
+
+.badge {
+  display: inline-block;
+  background: #dbeafe;
+  color: #2563eb;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+/* BUTTON AKSI */
+
+.btn-edit {
+  display: inline-block;
+  background: #3b82f6;
+  color: white;
+  padding: 9px 15px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 14px;
+  margin-right: 5px;
+  transition: 0.3s;
+}
+
+.btn-edit:hover {
+  background: #2563eb;
+  transform: scale(1.03);
+}
+
+.btn-hapus {
+  display: inline-block;
+  background: #ef4444;
+  color: white;
+  padding: 9px 15px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.btn-hapus:hover {
+  background: #dc2626;
+  transform: scale(1.03);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 210px;
+  }
+
+  .main {
+    margin-left: 210px;
+    padding: 25px;
+  }
+
+  .topbar h1 {
+    font-size: 26px;
+  }
+
+  table th,
+  table td {
+    padding: 12px;
+  }
+}
