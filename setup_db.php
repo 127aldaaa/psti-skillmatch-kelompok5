@@ -30,5 +30,20 @@ if ($row['cnt'] == 0) {
     mysqli_query($conn, $insert);
 }
 
+// Create table rekomendasi_skill
+$sql_rekomendasi = "CREATE TABLE IF NOT EXISTS rekomendasi_skill (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    peminatan_id INT NOT NULL,
+    skill_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)";
+
+if (mysqli_query($conn, $sql_rekomendasi)) {
+    echo "Table rekomendasi_skill created successfully<br>";
+} else {
+    echo "Error creating table: " . mysqli_error($conn) . "<br>";
+}
+
+
 mysqli_close($conn);
 ?>
