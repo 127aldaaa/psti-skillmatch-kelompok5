@@ -618,6 +618,8 @@ $dateRange = "25 Mei - 1 Juni 2025";
             <div class="menu-label">Manajemen Data</div>
             <a href="#" class="menu-item"><i class="fa-solid fa-bullseye"></i> Data Peminatan</a>
             <a href="../skill/index.php" class="menu-item"><i class="fa-solid fa-code"></i> Data Skill</a>
+            <a href="../skill_tracker/index.php" class="menu-item"><i class="fa-solid fa-chart-line"></i> Skill Tracker</a>
+            <a href="../progress_skill_tracker/index.php" class="menu-item"><i class="fa-solid fa-spinner"></i> Progress Skill Tracker</a>
             <a href="#" class="menu-item"><i class="fa-solid fa-file-lines"></i> Soal Tes Minat & Bakat</a>
 
             <a href="../kursus/kursus.php" class="menu-item">
