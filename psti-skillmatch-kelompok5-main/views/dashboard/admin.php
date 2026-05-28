@@ -2,7 +2,9 @@
 require_once '../../config/config.php';
 require_once '../../functions/helper.php';
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Inisialisasi session admin
 if (!isset($_SESSION['user'])) {

@@ -64,7 +64,6 @@ $nama_panggilan = $_SESSION['username'];
                     <a href="dashboard_mahasiswa.php" class="border-b-2 border-white pb-1">Beranda</a>
                     <a href="#" class="hover:text-blue-200 transition">Rekomendasi Minat</a>
                     <a href="#" class="hover:text-blue-200 transition">Kursus & Pelatihan</a>                
-                    <a href="profil_mahasiswa/index.php" class="hover:text-blue-200 transition">Profil Saya</a>
                     <a href="profil mahasiswa/index_profil.php" class="hover:text-blue-200 transition">Profil Saya</a>
                     
                     <!-- Sapaan User Mengambil dari $_SESSION['username'] -->
