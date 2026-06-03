@@ -616,11 +616,15 @@ $dateRange = "25 Mei - 1 Juni 2025";
             <a href="dashboard/admin.php" class="menu-item active"><i class="fa-solid fa-gauge"></i> Dashboard</a>
             
             <div class="menu-label">Manajemen Data</div>
-            <a href="#" class="menu-item"><i class="fa-solid fa-bullseye"></i> Data Peminatan</a>
-            <a href="../skill/index.php" class="menu-item"><i class="fa-solid fa-code"></i> Data Skill</a>
-            <a href="#" class="menu-item"><i class="fa-solid fa-file-lines"></i> Soal Tes Minat & Bakat</a>
+            <a href="../manajemen data peminatan/index.php" class="menu-item">
+            <i class="fa-solid fa-bullseye"></i> Data Peminatan</a>
 
-            <a href="../kursus/kursus.php" class="menu-item">
+            <a href="../skill/index.php" class="menu-item"><i class="fa-solid fa-code"></i> Data Skill</a>
+
+            <a href="../fitur_tesminatbakat/data_soal.php" class="menu-item">
+            <i class="fa-solid fa-file-lines"></i> Soal Tes Minat & Bakat</a>
+
+            <a href="../manajemen_kursuspelatihan/kursus.php" class="menu-item">
             <i class="fa-solid fa-graduation-cap"></i> Kursus / Pelatihan</a>
             
             <div class="menu-label">Komunikasi</div>

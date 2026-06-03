@@ -70,9 +70,9 @@ $nama_panggilan = isset($_SESSION['username']) ? $_SESSION['username'] : 'Alda';
                     </div>
                     <span class="font-bold text-xl tracking-wide">PSTI Skill Match</span>
                 </div>
-                
+                <a href="../dashboard mahasiswa/dashboard_mahasiswa.php">Beranda</a>
                 <div class="hidden md:flex space-x-8 items-center text-sm font-medium">
-                    <a href="dashboard_mahasiswa.php" class="border-b-2 border-white pb-1">Beranda</a>
+                    <a href="/dashboard mahasiswa/dashboard_mahasiswa.php">Beranda</a>
                     <a href="#" class="hover:text-blue-200 transition">Rekomendasi</a>
                     <a href="#" class="hover:text-blue-200 transition">Kursus</a>                
                     
