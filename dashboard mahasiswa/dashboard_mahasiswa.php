@@ -1,10 +1,6 @@
 <?php
 // dashboard_mahasiswa.php
 session_start();
-
-// ---------------------------------------------------------
-// FITUR ANTI-CACHE: Memaksa browser memuat tampilan terbaru
-// ---------------------------------------------------------
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
@@ -87,14 +83,14 @@ $nama_panggilan = isset($_SESSION['username']) ? $_SESSION['username'] : 'Alda';
                     <a href="" class="hover:text-blue-200 transition">Rekomendasi</a>
                     <a href="kursus_mahasiswa.php" class="hover:text-blue-200 transition">Kursus</a>                
                     
-                    <!-- FITUR: LINK MENUJU PROFIL (Menggunakan rute folder langsung) -->
+                    <!-- FITUR: LINK MENUJU PROFIL -->
                     <a href="profil%20mahasiswa/index_profil.php" class="hover:text-blue-200 transition font-bold bg-white/10 px-4 py-2 rounded-full border border-white/30 hover:bg-white/20">Profil Mahasiswa</a>
                     
                     <div class="flex items-center gap-3 pl-6 border-l border-white/20">
                         <div class="text-right">
                             <div class="text-sm font-bold capitalize"><?php echo htmlspecialchars($nama_panggilan); ?></div>
                         </div>
-                        <!-- FITUR: LOGOUT (Sudah sejajar, tidak perlu ../) -->
+                        <!-- FITUR: LOGOUT -->
                         <a href="logout.php" class="w-9 h-9 rounded-full bg-red-500 hover:bg-red-600 text-white flex items-center justify-center transition-colors shadow-lg" title="Logout">
                             <i class="fa-solid fa-right-from-bracket text-sm"></i>
                         </a>
