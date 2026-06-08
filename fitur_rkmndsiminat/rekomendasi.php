@@ -34,8 +34,14 @@ $skorC       = $_SESSION['skorC'] ?? 0;
             <p>📊 Skor C: <?= htmlspecialchars($skorC) ?></p>
         </div>
 
-        <a href="../riwayat.php" class="btn secondary">Lihat Riwayat</a>
-        <a href="../fitur_tesminat/tes.php" class="btn secondary">Ulangi Tes</a>
+        <a href="fitur_riwayates/riwayat.php" class="btn primary">
+            Lihat Riwayat
+    </a>
+        <a href="../fitur_tesminat/tes.php" class="btn primary">Ulangi Tes</a>
+
+        <a href="../dashboard_mahasiswa/dashboard_mahasiswa.php" class="btn primary">
+        Kembali ke Dashboard
+    </a>
 
     </div>
 

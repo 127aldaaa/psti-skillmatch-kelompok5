@@ -79,10 +79,9 @@ $data = mysqli_query(
             <?php endif; ?>
 
         </table>
-
-        <a href="../dashboard/mahasiswa.php" class="btn-kembali">
-            ← Kembali ke Dashboard
-        </a>
+        <a href="../dashboard_mahasiswa/dashboard_mahasiswa.php" class="btn-kembali">
+    ← Kembali ke Dashboard
+</a>
 
     </div>
 

@@ -74,3 +74,22 @@ button {
 button:hover {
   background: #9adcff;
 }
+
+.aksi {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.btn-kembali {
+  display: inline-block;
+  padding: 12px 20px;
+  background: #6c757d;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.btn-kembali:hover {
+  opacity: 0.9;
+}

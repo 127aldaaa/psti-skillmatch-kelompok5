@@ -76,6 +76,12 @@ $data = mysqli_query($conn, "SELECT * FROM soal_tes");
 
         </form>
 
+        <div class="aksi">
+    <a href="../dashboard_mahasiswa/dashboard_mahasiswa.php" class="btn-kembali">
+        ← Kembali ke Dashboard
+    </a>
+</div>
+
     </div>
 
 </div>
