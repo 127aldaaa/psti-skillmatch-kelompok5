@@ -63,9 +63,11 @@ $data = mysqli_query($conn, "SELECT * FROM soal_tes");
 
                         <td>
                             <span class="badge">
-                                <?= $row['kategori']; ?>
-                            </span>
-                        </td>
+                            <?= $row['kategori_a']; ?> /
+                            <?= $row['kategori_b']; ?> /
+                            <?= $row['kategori_c']; ?>
+                        </span>
+                    </td>
 
                         <td>
 

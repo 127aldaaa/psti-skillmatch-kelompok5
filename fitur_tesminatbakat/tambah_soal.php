@@ -1,206 +1,190 @@
 <?php
 include '../config.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if(isset($_POST['simpan'])){
 
-    $data = json_decode(file_get_contents("php://input"), true);
+    $pertanyaan = $_POST['pertanyaan'];
 
-    $pertanyaan = $data['pertanyaan'];
-    $kategori   = $data['kategori'];
+    $kategori_a = $_POST['kategori_a'];
+    $kategori_b = $_POST['kategori_b'];
+    $kategori_c = $_POST['kategori_c'];
 
-    $opsi_a = $data['opsi'][0]['teks_jawaban'];
-    $opsi_b = $data['opsi'][1]['teks_jawaban'];
-    $opsi_c = $data['opsi'][2]['teks_jawaban'];
-    $opsi_d = $data['opsi'][3]['teks_jawaban'];
+    $opsi_a = $_POST['opsi_a'];
+    $opsi_b = $_POST['opsi_b'];
+    $opsi_c = $_POST['opsi_c'];
 
-    $query = "INSERT INTO soal_tes
-    (pertanyaan, opsi_a, opsi_b, opsi_c, opsi_d, kategori)
-    VALUES
-    ('$pertanyaan','$opsi_a','$opsi_b','$opsi_c','$opsi_d','$kategori')";
+    $query = mysqli_query($conn, "
+        INSERT INTO soal_tes
+        (
+            pertanyaan,
+            opsi_a,
+            opsi_b,
+            opsi_c,
+            kategori_a,
+            kategori_b,
+            kategori_c
+        )
 
-    if(mysqli_query($conn, $query)){
+        VALUES
+        (
+            '$pertanyaan',
+            '$opsi_a',
+            '$opsi_b',
+            '$opsi_c',
+            '$kategori_a',
+            '$kategori_b',
+            '$kategori_c'
+        )
+    ");
 
-        echo json_encode([
-            "success" => true,
-            "message" => "Soal berhasil disimpan"
-        ]);
+    if($query){
+
+        echo "
+        <script>
+            alert('Soal berhasil ditambahkan!');
+            window.location='data_soal.php';
+        </script>
+        ";
 
     } else {
 
-        echo json_encode([
-            "success" => false,
-            "message" => mysqli_error($conn)
-        ]);
+        echo mysqli_error($conn);
+
     }
 
-    exit;
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>Tambah Soal</title>
 
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            margin: 0;
-            background: linear-gradient(135deg, #e0eafc, #cfdef3);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+<style>
 
-        .container {
-            width: 100%;
-            max-width: 650px;
-            background: #fff;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
+body{
+    font-family:Arial;
+    background:#dbeafe;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
 
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+.container{
+    width:700px;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
 
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-        }
+h1{
+    text-align:center;
+    margin-bottom:25px;
+}
 
-        .opsi-box {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
+input{
+    width:100%;
+    padding:12px;
+    margin-top:8px;
+    margin-bottom:20px;
+    border:1px solid #8ec5e8;
+    border-radius:10px;
+}
 
-        .label {
-            width: 30px;
-            font-weight: bold;
-        }
+button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#2563eb;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
 
-        button {
-            width: 100%;
-            padding: 12px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+button:hover{
+    background:#1d4ed8;
+}
 
-        .btn-submit {
-            background: #28a745;
-            color: white;
-        }
+.btn-kembali{
+    display:block;
+    text-align:center;
+    margin-top:15px;
+    background:#e5e7eb;
+    color:black;
+    padding:12px;
+    border-radius:10px;
+    text-decoration:none;
+}
 
-        .btn-submit:hover {
-            background: #218838;
-        }
-    </style>
+</style>
+
 </head>
 
 <body>
 
 <div class="container">
 
-    <h2>Tambah Soal Minat & Bakat</h2>
+    <h1>Tambah Soal Minat & Bakat</h1>
 
-    <input type="text" id="pertanyaan" placeholder="Masukkan pertanyaan">
-    <input type="text" id="kategori" placeholder="Kategori (contoh: pendidikan)">
+    <form method="POST">
 
-    <h4>Opsi Jawaban</h4>
+        <label>Pertanyaan</label>
+        <input type="text"
+               name="pertanyaan"
+               required>
 
-    <div class="opsi-box">
-        <div class="label">A</div>
-        <input type="text" id="opsiA" placeholder="Jawaban A">
-    </div>
+        <label>Kategori A</label>
+        <input type="text"
+               name="kategori_a"
+               placeholder="Contoh: Sistem Informasi"
+               required>
 
-    <div class="opsi-box">
-        <div class="label">B</div>
-        <input type="text" id="opsiB" placeholder="Jawaban B">
-    </div>
+        <label>Kategori B</label>
+        <input type="text"
+               name="kategori_b"
+               placeholder="Contoh: Engineering"
+               required>
 
-    <div class="opsi-box">
-        <div class="label">C</div>
-        <input type="text" id="opsiC" placeholder="Jawaban C">
-    </div>
+        <label>Kategori C</label>
+        <input type="text"
+               name="kategori_c"
+               placeholder="Contoh: Pendidikan"
+               required>
 
-    <div class="opsi-box">
-        <div class="label">D</div>
-        <input type="text" id="opsiD" placeholder="Jawaban D">
-    </div>
+        <h3>Opsi Jawaban</h3>
 
-    <button class="btn-back"
-    onclick="window.location.href='data_soal.php'">
-    Kembali
-</button>
+        <label>Opsi A</label>
+        <input type="text"
+               name="opsi_a"
+               value="Sangat tertarik"
+               required>
 
-    <button class="btn-submit" onclick="submitSoal()">Simpan Soal</button>
+        <label>Opsi B</label>
+        <input type="text"
+               name="opsi_b"
+               value="Tertarik"
+               required>
+
+        <label>Opsi C</label>
+        <input type="text"
+               name="opsi_c"
+               value="Kurang tertarik"
+               required>
+
+        <button type="submit" name="simpan">
+            Simpan Soal
+        </button>
+
+        <a href="data_soal.php" class="btn-kembali">
+            Kembali
+        </a>
+
+    </form>
 
 </div>
-
-<script>
-function submitSoal() {
-    const pertanyaan = document.getElementById('pertanyaan').value;
-    const kategori = document.getElementById('kategori').value;
-
-    const opsi = [
-        { teks_jawaban: document.getElementById('opsiA').value, label: "A" },
-        { teks_jawaban: document.getElementById('opsiB').value, label: "B" },
-        { teks_jawaban: document.getElementById('opsiC').value, label: "C" },
-        { teks_jawaban: document.getElementById('opsiD').value, label: "D" }
-    ];
-
-    if (!pertanyaan) {
-        alert("Pertanyaan wajib diisi!");
-        return;
-    }
-
-    fetch('tambah_soal.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            pertanyaan,
-            kategori,
-            opsi
-        })
-    })
-    .then(res => res.json())
-    .then(data => {
-
-        if (data.success) {
-            alert("✅ " + data.message);
-
-            document.getElementById('pertanyaan').value = '';
-            document.getElementById('kategori').value = '';
-
-            document.getElementById('opsiA').value = '';
-            document.getElementById('opsiB').value = '';
-            document.getElementById('opsiC').value = '';
-            document.getElementById('opsiD').value = '';
-
-        } else {
-            alert("❌ " + data.message);
-        }
-
-    })
-    .catch(() => {
-        alert("❌ Gagal menyimpan soal");
-    });
-}
-</script>
 
 </body>
 </html>

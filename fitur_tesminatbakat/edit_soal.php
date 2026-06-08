@@ -11,21 +11,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $input = json_decode(file_get_contents("php://input"), true);
 
     $pertanyaan = $input['pertanyaan'];
-    $kategori   = $input['kategori'];
+
+    $kategori_a = $input['kategori_a'];
+    $kategori_b = $input['kategori_b'];
+    $kategori_c = $input['kategori_c'];
 
     $opsi_a = $input['opsi'][0]['teks_jawaban'];
     $opsi_b = $input['opsi'][1]['teks_jawaban'];
     $opsi_c = $input['opsi'][2]['teks_jawaban'];
-    $opsi_d = $input['opsi'][3]['teks_jawaban'];
 
     $update = mysqli_query($conn, "
         UPDATE soal_tes SET
         pertanyaan='$pertanyaan',
-        kategori='$kategori',
+
+        kategori_a='$kategori_a',
+        kategori_b='$kategori_b',
+        kategori_c='$kategori_c',
+
         opsi_a='$opsi_a',
         opsi_b='$opsi_b',
-        opsi_c='$opsi_c',
-        opsi_d='$opsi_d'
+        opsi_c='$opsi_c'
+
         WHERE id_soal='$id'
     ");
 
@@ -207,6 +213,7 @@ button{
     <div class="form-content">
 
         <div class="form-group">
+
             <label>Pertanyaan</label>
 
             <input 
@@ -215,17 +222,46 @@ button{
                 value="<?= $data['pertanyaan']; ?>"
                 placeholder="Masukkan pertanyaan..."
             >
+
         </div>
 
         <div class="form-group">
-            <label>Kategori</label>
+
+            <label>Kategori A</label>
 
             <input 
                 type="text"
-                id="kategori"
-                value="<?= $data['kategori']; ?>"
+                id="kategoriA"
+                value="<?= $data['kategori_a']; ?>"
+                placeholder="Contoh: Sistem Informasi"
+            >
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Kategori B</label>
+
+            <input 
+                type="text"
+                id="kategoriB"
+                value="<?= $data['kategori_b']; ?>"
+                placeholder="Contoh: Engineering"
+            >
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Kategori C</label>
+
+            <input 
+                type="text"
+                id="kategoriC"
+                value="<?= $data['kategori_c']; ?>"
                 placeholder="Contoh: Pendidikan"
             >
+
         </div>
 
         <div class="form-group">
@@ -235,6 +271,7 @@ button{
             <div class="opsi-container">
 
                 <div class="opsi-box">
+
                     <div class="opsi-title">Opsi A</div>
 
                     <input 
@@ -242,9 +279,11 @@ button{
                         id="opsiA"
                         value="<?= $data['opsi_a']; ?>"
                     >
+
                 </div>
 
                 <div class="opsi-box">
+
                     <div class="opsi-title">Opsi B</div>
 
                     <input 
@@ -252,9 +291,11 @@ button{
                         id="opsiB"
                         value="<?= $data['opsi_b']; ?>"
                     >
+
                 </div>
 
                 <div class="opsi-box">
+
                     <div class="opsi-title">Opsi C</div>
 
                     <input 
@@ -262,16 +303,7 @@ button{
                         id="opsiC"
                         value="<?= $data['opsi_c']; ?>"
                     >
-                </div>
 
-                <div class="opsi-box">
-                    <div class="opsi-title">Opsi D</div>
-
-                    <input 
-                        type="text"
-                        id="opsiD"
-                        value="<?= $data['opsi_d']; ?>"
-                    >
                 </div>
 
             </div>
@@ -301,13 +333,28 @@ button{
 function updateSoal(){
 
     const pertanyaan = document.getElementById('pertanyaan').value;
-    const kategori   = document.getElementById('kategori').value;
+
+    const kategori_a = document.getElementById('kategoriA').value;
+    const kategori_b = document.getElementById('kategoriB').value;
+    const kategori_c = document.getElementById('kategoriC').value;
 
     const opsi = [
-        { teks_jawaban: document.getElementById('opsiA').value, label:"A" },
-        { teks_jawaban: document.getElementById('opsiB').value, label:"B" },
-        { teks_jawaban: document.getElementById('opsiC').value, label:"C" },
-        { teks_jawaban: document.getElementById('opsiD').value, label:"D" }
+
+        {
+            teks_jawaban: document.getElementById('opsiA').value,
+            label:"A"
+        },
+
+        {
+            teks_jawaban: document.getElementById('opsiB').value,
+            label:"B"
+        },
+
+        {
+            teks_jawaban: document.getElementById('opsiC').value,
+            label:"C"
+        }
+
     ];
 
     fetch('',{
@@ -319,9 +366,15 @@ function updateSoal(){
         },
 
         body: JSON.stringify({
+
             pertanyaan,
-            kategori,
+
+            kategori_a,
+            kategori_b,
+            kategori_c,
+
             opsi
+
         })
 
     })
@@ -356,3 +409,4 @@ function updateSoal(){
 
 </body>
 </html>
+```

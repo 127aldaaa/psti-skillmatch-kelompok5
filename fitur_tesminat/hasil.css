@@ -1,0 +1,54 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #83aed9;
+  margin: 0;
+  padding: 50px;
+}
+
+.hasil-container {
+  max-width: 600px;
+  margin: auto;
+}
+
+.hasil-box {
+  background: rgb(234, 237, 237);
+  padding: 40px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+h1 {
+  color: #1e293b;
+  margin-bottom: 15px;
+}
+
+.deskripsi {
+  color: #64748b;
+  margin-bottom: 30px;
+}
+
+.hasil {
+  font-size: 30px;
+  font-weight: bold;
+  color: #2563eb;
+  margin-top: 20px;
+  padding: 20px;
+  background: #eff6ff;
+  border-radius: 12px;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 30px;
+  padding: 12px 25px;
+  background: #6aaee6;
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #6e7072;
+}
