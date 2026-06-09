@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once 'config/config.php';
 include 'config.php';
 
 $error = "";
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 header("Location: views/dashboard/admin.php");
                 exit();
             } else {
-                header("Location: dashboard_mahasiswa.php");
+                header("Location: dashboard_mahasiswa/dashboard_mahasiswa.php");
                 exit();
             }
 

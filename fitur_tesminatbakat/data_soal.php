@@ -1,8 +1,8 @@
 <?php
-session_start();
-include '../config.php';
+require_once '../config/config.php';
+require_once '../config.php';
 
-if ($_SESSION['role'] != 'admin') {
+if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
     header("Location: ../login.php");
     exit();
 }

@@ -1,4 +1,4 @@
-<?php include '../../config/koneksi.php'; ?>
+<?php include '../config/koneksi.php'; ?>
 
 <h2>Daftar Kursus</h2>
 

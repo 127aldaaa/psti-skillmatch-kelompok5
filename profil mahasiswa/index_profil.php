@@ -49,7 +49,7 @@ $data = mysqli_fetch_assoc($query);
         </div>
 
         <a href="edit_profil.php" class="btn-edit">Edit Profil</a>
-        <a href="../dashboard_mahasiswa.php" style="display:block; margin-top:15px; color:#aaa; text-decoration:none; font-size:12px;">Kembali</a>
+        <a href="../dashboard_mahasiswa/dashboard_mahasiswa.php" style="display:block; margin-top:15px; color:#aaa; text-decoration:none; font-size:12px;">Kembali</a>
     </div>
 
 </body>

@@ -1,16 +1,18 @@
 <?php
 require_once '../../config/config.php';
+require_once '../../config/koneksi.php';
 require_once '../../functions/helper.php';
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Inisialisasi session admin
-if (!isset($_SESSION['user'])) {
-    $_SESSION['user'] = 'Admin';
+// Pastikan user sudah login sebagai admin
+if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
+    header("Location: ../../login.php");
+    exit();
 }
-$adminName = $_SESSION['user'];
+$adminName = $_SESSION['username'] ?? 'Admin';
 
 // Tanggal Dummy
 $dateRange = "25 Mei - 1 Juni 2025";

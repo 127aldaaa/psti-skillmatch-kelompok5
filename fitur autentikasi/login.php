@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 header("Location: dashboard_admin.php");
                 exit();
             } else {
-                header("Location: dashboard_mahasiswa.php");
+                header("Location: ../dashboard_mahasiswa/dashboard_mahasiswa.php");
                 exit();
             }
 

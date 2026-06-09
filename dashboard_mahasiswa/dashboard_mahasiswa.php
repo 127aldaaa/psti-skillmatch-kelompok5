@@ -1,6 +1,7 @@
 <?php
 // dashboard_mahasiswa.php
-session_start();
+require_once '../config/config.php';
+require_once '../config.php';
 
 // ---------------------------------------------------------
 // FITUR ANTI-CACHE: Memaksa browser memuat tampilan terbaru
@@ -10,9 +11,8 @@ header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
 // PROTEKSI HALAMAN: 
-// Karena file ini sekarang sejajar dengan login.php, kita tidak perlu pakai ../
 if (!isset($_SESSION['id']) || $_SESSION['role'] == 'admin') {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit();
 }
 
@@ -106,18 +106,18 @@ if ($res_skills) {
                 
                 <div class="hidden md:flex space-x-8 items-center text-sm font-medium">
                     <a href="dashboard_mahasiswa.php" class="border-b-2 border-white pb-1">Beranda</a>
-                    <a href="" class="hover:text-blue-200 transition">Rekomendasi</a>
-                    <a href="kursus_mahasiswa.php" class="hover:text-blue-200 transition">Kursus</a>                
+                    <a href="../fitur_rkmndsiminat/rekomendasi.php" class="hover:text-blue-200 transition">Rekomendasi</a>
+                    <a href="../fitur kursus dan latihan/kursus_mahasiswa.php" class="hover:text-blue-200 transition">Kursus</a>                
                     
                     <!-- FITUR: LINK MENUJU PROFIL (Menggunakan rute folder langsung) -->
-                    <a href="profil%20mahasiswa/index_profil.php" class="hover:text-blue-200 transition font-bold bg-white/10 px-4 py-2 rounded-full border border-white/30 hover:bg-white/20">Profil Mahasiswa</a>
+                    <a href="../profil mahasiswa/index_profil.php" class="hover:text-blue-200 transition font-bold bg-white/10 px-4 py-2 rounded-full border border-white/30 hover:bg-white/20">Profil Mahasiswa</a>
                     
                     <div class="flex items-center gap-3 pl-6 border-l border-white/20">
                         <div class="text-right">
                             <div class="text-sm font-bold capitalize"><?php echo htmlspecialchars($nama_panggilan); ?></div>
                         </div>
-                        <!-- FITUR: LOGOUT (Sudah sejajar, tidak perlu ../) -->
-                        <a href="logout.php" class="w-9 h-9 rounded-full bg-red-500 hover:bg-red-600 text-white flex items-center justify-center transition-colors shadow-lg" title="Logout">
+                        <!-- FITUR: LOGOUT -->
+                        <a href="../logout.php" class="w-9 h-9 rounded-full bg-red-500 hover:bg-red-600 text-white flex items-center justify-center transition-colors shadow-lg" title="Logout">
                             <i class="fa-solid fa-right-from-bracket text-sm"></i>
                         </a>
                     </div>
@@ -143,28 +143,28 @@ if ($res_skills) {
         
         <!-- FITUR: QUICK ACCESS -->
         <div class="bg-surface rounded-2xl floating-box flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-slate-100 mb-8 border border-slate-200">
-            <a href="/skillmatch/fitur_tesminat/tes.php" class="flex-1 p-6 flex items-center gap-4 hover:bg-blue-50/50 transition rounded-l-2xl group">
+            <a href="../fitur_tesminat/tes.php" class="flex-1 p-6 flex items-center gap-4 hover:bg-blue-50/50 transition rounded-l-2xl group">
                 <div class="w-12 h-12 rounded-full bg-blue-100 text-admin-blue flex items-center justify-center text-xl group-hover:scale-110 transition-transform"><i class="fa-regular fa-clipboard"></i></div>
                 <div>
                     <h3 class="font-bold text-slate-800 text-base group-hover:text-admin-blue transition">Tes Minat & Bakat</h3>
                     <p class="text-xs text-slate-500 mt-0.5">Evaluasi potensimu</p>
                 </div>
             </a>
-            <a href="#" class="flex-1 p-6 flex items-center gap-4 hover:bg-blue-50/50 transition group">
+            <a href="../fitur_rkmndsiminat/rekomendasi.php" class="flex-1 p-6 flex items-center gap-4 hover:bg-blue-50/50 transition group">
                 <div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl group-hover:scale-110 transition-transform"><i class="fa-solid fa-bullseye"></i></div>
                 <div>
                     <h3 class="font-bold text-slate-800 text-base group-hover:text-admin-blue transition">Rekomendasi Peminatan</h3>
                     <p class="text-xs text-slate-500 mt-0.5">Lihat hasil analisis</p>
                 </div>
             </a>
-            <a href="#" class="flex-1 p-6 flex items-center gap-4 hover:bg-blue-50/50 transition group">
+            <a href="../fitur kursus dan latihan/kursus_mahasiswa.php" class="flex-1 p-6 flex items-center gap-4 hover:bg-blue-50/50 transition group">
                 <div class="w-12 h-12 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center text-xl group-hover:scale-110 transition-transform"><i class="fa-solid fa-laptop-file"></i></div>
                 <div>
                     <h3 class="font-bold text-slate-800 text-base group-hover:text-admin-blue transition">Katalog Kursus</h3>
                     <p class="text-xs text-slate-500 mt-0.5">Mulai pelatihan</p>
                 </div>
             </a>
-            <a href="profil%20mahasiswa/index_profil.php" class="flex-1 p-6 flex items-center gap-4 hover:bg-blue-50/50 transition rounded-r-2xl group">
+            <a href="../profil mahasiswa/index_profil.php" class="flex-1 p-6 flex items-center gap-4 hover:bg-blue-50/50 transition rounded-r-2xl group">
                 <div class="w-12 h-12 rounded-full bg-orange-100 text-orange-500 flex items-center justify-center text-xl group-hover:scale-110 transition-transform"><i class="fa-regular fa-user"></i></div>
                 <div>
                     <h3 class="font-bold text-slate-800 text-base group-hover:text-admin-blue transition">Profile Mahasiswa</h3>
@@ -201,7 +201,7 @@ if ($res_skills) {
                     </div>
                 </div>
                 
-                <a href="profil%20mahasiswa/index_profil.php" class="mt-auto block w-full py-2.5 bg-admin-blue text-white text-center font-bold text-sm rounded-xl hover:bg-admin-dark transition-colors shadow-md">Lihat Profil Lengkap</a>
+                <a href="../profil mahasiswa/index_profil.php" class="mt-auto block w-full py-2.5 bg-admin-blue text-white text-center font-bold text-sm rounded-xl hover:bg-admin-dark transition-colors shadow-md">Lihat Profil Lengkap</a>
             </div>
 
             <!-- FITUR: STATISTIK HASIL TEST -->
@@ -270,7 +270,7 @@ if ($res_skills) {
             <div class="bg-surface rounded-2xl border border-slate-200 card-shadow overflow-hidden lg:col-span-2 flex flex-col">
                 <div class="p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
                     <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider">Rekomendasi Kursus & Pelatihan</h3>
-                    <a href="#" class="text-xs font-bold text-admin-blue hover:underline">Lihat Katalog</a>
+                    <a href="../fitur kursus dan latihan/kursus_mahasiswa.php" class="text-xs font-bold text-admin-blue hover:underline">Lihat Katalog</a>
                 </div>
                 <div class="overflow-x-auto p-2">
                     <table class="w-full text-left">
@@ -315,7 +315,7 @@ if ($res_skills) {
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </div>
-                <button class="w-full mt-4 py-2 bg-slate-50 border border-slate-200 text-admin-dark font-bold text-xs rounded-lg hover:bg-slate-100 transition-colors" onclick="window.location.href='../notifikasi_pengumuman/index.php'">Lihat Semua</button>
+                <button class="w-full mt-4 py-2 bg-slate-50 border border-slate-200 text-admin-dark font-bold text-xs rounded-lg hover:bg-slate-100 transition-colors" onclick="window.location.href='#'">Lihat Semua</button>
             </div>
         </div>
         
@@ -332,7 +332,7 @@ if ($res_skills) {
                         </span>
                     <?php endforeach; ?>
                 <?php endif; ?>
-                <button class="px-3 py-1.5 border border-dashed border-slate-300 rounded-lg text-sm font-bold text-slate-400 hover:border-admin-blue hover:text-admin-blue transition-colors flex items-center gap-2"><i class="fa-solid fa-plus"></i> Tambah Log Skill</button>
+                <button class="px-3 py-1.5 border border-dashed border-slate-300 rounded-lg text-sm font-bold text-slate-400 hover:border-admin-blue hover:text-admin-blue transition-colors flex items-center gap-2" onclick="window.location.href='skill_tracker_mahasiswa.php'"><i class="fa-solid fa-plus"></i> Tambah Log Skill</button>
             </div>
         </div>
 

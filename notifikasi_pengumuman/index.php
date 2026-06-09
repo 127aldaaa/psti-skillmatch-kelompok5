@@ -1,12 +1,15 @@
 <?php
-include 'koneksi.php';
+include '../config/config.php';
+include '../config.php'; // Atau '../config/koneksi.php' jika sudah disamakan ke skillmatch. Kita pakai root config.php karena itu yang utama untuk skillmatch
 
 // --- LOGIKA HAPUS DATA ---
 if (isset($_GET['hapus'])) {
     $id = $_GET['hapus'];
-    $stmt = $pdo->prepare("DELETE FROM peminatan WHERE id = ?");
-    $stmt->execute([$id]);
+    $stmt = mysqli_prepare($conn, "DELETE FROM peminatan WHERE id = ?");
+    mysqli_stmt_bind_param($stmt, "i", $id);
+    mysqli_stmt_execute($stmt);
     header("Location: index.php");
+    exit();
 }
 
 // --- LOGIKA SIMPAN & EDIT DATA ---
@@ -18,26 +21,36 @@ if (isset($_POST['simpan'])) {
 
     if ($id == "") {
         $sql = "INSERT INTO peminatan (nama_peminatan, deskripsi, kategori) VALUES (?, ?, ?)";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([$nama, $deskripsi, $kategori]);
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "sss", $nama, $deskripsi, $kategori);
+        mysqli_stmt_execute($stmt);
     } else {
         $sql = "UPDATE peminatan SET nama_peminatan=?, deskripsi=?, kategori=? WHERE id=?";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([$nama, $deskripsi, $kategori, $id]);
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "sssi", $nama, $deskripsi, $kategori, $id);
+        mysqli_stmt_execute($stmt);
     }
     header("Location: index.php");
+    exit();
 }
 
 // --- LOGIKA AMBIL DATA UNTUK EDIT ---
 $edit_data = ['id' => '', 'nama_peminatan' => '', 'deskripsi' => '', 'kategori' => ''];
 if (isset($_GET['edit'])) {
-    $stmt = $pdo->prepare("SELECT * FROM peminatan WHERE id = ?");
-    $stmt->execute([$_GET['edit']]);
-    $edit_data = $stmt->fetch();
+    $stmt = mysqli_prepare($conn, "SELECT * FROM peminatan WHERE id = ?");
+    mysqli_stmt_bind_param($stmt, "i", $_GET['edit']);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+    if ($row = mysqli_fetch_assoc($res)) {
+        $edit_data = $row;
+    }
 }
 
-$query = $pdo->query("SELECT * FROM peminatan ORDER BY id DESC");
-$data_peminatan = $query->fetchAll();
+$query = mysqli_query($conn, "SELECT * FROM peminatan ORDER BY id DESC");
+$data_peminatan = [];
+while ($row = mysqli_fetch_assoc($query)) {
+    $data_peminatan[] = $row;
+}
 ?>
 
 <!DOCTYPE html>

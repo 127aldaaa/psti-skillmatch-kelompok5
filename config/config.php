@@ -22,7 +22,4 @@ $base_url = $protocol . "://" . $host;
 define('BASE_URL', $base_url);
 define('APP_NAME', 'PSTI Skill Match');
 
-// Inisialisasi session admin default jika belum ada
-if (!isset($_SESSION['user'])) {
-    $_SESSION['user'] = 'Admin';
-}
+

@@ -1,11 +1,14 @@
 <?php
-include '../peminatan/koneksi.php';
+require_once '../config/config.php';
+require_once '../config.php';
 
 // HAPUS
 if (isset($_GET['hapus'])) {
-    $stmt = $pdo->prepare("DELETE FROM notifikasi WHERE id=?");
-    $stmt->execute([$_GET['hapus']]);
+    $stmt = mysqli_prepare($conn, "DELETE FROM notifikasi WHERE id=?");
+    mysqli_stmt_bind_param($stmt, "i", $_GET['hapus']);
+    mysqli_stmt_execute($stmt);
     header("Location: notifikasi.php");
+    exit();
 }
 
 // SIMPAN
@@ -15,25 +18,36 @@ if (isset($_POST['simpan'])) {
     $isi = $_POST['isi'];
 
     if ($id == "") {
-        $stmt = $pdo->prepare("INSERT INTO notifikasi (judul, isi) VALUES (?, ?)");
-        $stmt->execute([$judul, $isi]);
+        $stmt = mysqli_prepare($conn, "INSERT INTO notifikasi (judul, isi) VALUES (?, ?)");
+        mysqli_stmt_bind_param($stmt, "ss", $judul, $isi);
+        mysqli_stmt_execute($stmt);
     } else {
-        $stmt = $pdo->prepare("UPDATE notifikasi SET judul=?, isi=? WHERE id=?");
-        $stmt->execute([$judul, $isi, $id]);
+        $stmt = mysqli_prepare($conn, "UPDATE notifikasi SET judul=?, isi=? WHERE id=?");
+        mysqli_stmt_bind_param($stmt, "ssi", $judul, $isi, $id);
+        mysqli_stmt_execute($stmt);
     }
     header("Location: notifikasi.php");
+    exit();
 }
 
 // EDIT
 $edit = ['id'=>'','judul'=>'','isi'=>''];
 if (isset($_GET['edit'])) {
-    $stmt = $pdo->prepare("SELECT * FROM notifikasi WHERE id=?");
-    $stmt->execute([$_GET['edit']]);
-    $edit = $stmt->fetch();
+    $stmt = mysqli_prepare($conn, "SELECT * FROM notifikasi WHERE id=?");
+    mysqli_stmt_bind_param($stmt, "i", $_GET['edit']);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+    if ($row = mysqli_fetch_assoc($res)) {
+        $edit = $row;
+    }
 }
 
 // AMBIL DATA
-$data = $pdo->query("SELECT * FROM notifikasi ORDER BY id DESC")->fetchAll();
+$data_query = mysqli_query($conn, "SELECT * FROM notifikasi ORDER BY id DESC");
+$data = [];
+while ($row = mysqli_fetch_assoc($data_query)) {
+    $data[] = $row;
+}
 ?>
 
 <!DOCTYPE html>

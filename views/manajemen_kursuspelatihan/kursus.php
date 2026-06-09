@@ -1,6 +1,11 @@
 <?php
 require_once '../../config/config.php';
 require_once '../../config/koneksi.php';
+
+if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
+    header("Location: ../../login.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
