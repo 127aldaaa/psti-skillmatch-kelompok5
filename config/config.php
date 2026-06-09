@@ -1,6 +1,13 @@
 <?php
 // config/config.php
 
+// Pastikan path session valid
+$sessionPath = sys_get_temp_dir();
+if (!is_dir($sessionPath)) {
+    mkdir($sessionPath, 0777, true);
+}
+session_save_path($sessionPath);
+
 // Mulai session
 if (session_status() === PHP_SESSION_NONE) {
     session_start();

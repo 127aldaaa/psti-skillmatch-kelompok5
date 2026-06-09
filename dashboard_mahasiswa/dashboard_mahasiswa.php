@@ -18,6 +18,28 @@ if (!isset($_SESSION['id']) || $_SESSION['role'] == 'admin') {
 
 // Ambil username dari session
 $nama_panggilan = isset($_SESSION['username']) ? $_SESSION['username'] : 'Alda';
+
+require_once '../config/config.php';
+
+// Fetch Notifikasi
+$sql_notif = "SELECT * FROM notifikasi ORDER BY id DESC LIMIT 2";
+$res_notif = mysqli_query($conn, $sql_notif);
+$notifications = [];
+if ($res_notif) {
+    while($row = mysqli_fetch_assoc($res_notif)) {
+        $notifications[] = $row;
+    }
+}
+
+// Fetch Skill Tracker Mahasiswa
+$sql_skills = "SELECT * FROM skill_tracker WHERE nama_mahasiswa = '" . mysqli_real_escape_string($conn, $nama_panggilan) . "'";
+$res_skills = mysqli_query($conn, $sql_skills);
+$user_skills = [];
+if ($res_skills) {
+    while($row = mysqli_fetch_assoc($res_skills)) {
+        $user_skills[] = $row;
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -194,22 +216,26 @@ $nama_panggilan = isset($_SESSION['username']) ? $_SESSION['username'] : 'Alda';
             <div class="bg-surface rounded-2xl p-6 border border-slate-200 card-shadow flex flex-col">
                 <div class="flex justify-between items-end mb-4 border-b border-slate-100 pb-2">
                     <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider">Progress Skill</h3>
-                    <span class="text-xs font-bold text-admin-blue bg-blue-50 px-2 py-1 rounded-md">12 Skill Aktif</span>
+                    <span class="text-xs font-bold text-admin-blue bg-blue-50 px-2 py-1 rounded-md"><?php echo count($user_skills); ?> Skill Aktif</span>
                 </div>
                 
                 <div class="space-y-4 flex-1 overflow-y-auto pr-2 custom-scrollbar">
-                    <div>
-                        <div class="flex justify-between text-sm mb-1.5"><span class="font-semibold text-slate-700"><i class="fa-brands fa-laravel text-red-500 mr-2"></i>Laravel Framework</span><span class="font-bold text-admin-blue">75%</span></div>
-                        <div class="w-full bg-slate-100 rounded-full h-2"><div class="bg-admin-blue h-2 rounded-full" style="width: 75%"></div></div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between text-sm mb-1.5"><span class="font-semibold text-slate-700"><i class="fa-brands fa-html5 text-orange-500 mr-2"></i>Front-End (HTML/CSS)</span><span class="font-bold text-emerald-500">90%</span></div>
-                        <div class="w-full bg-slate-100 rounded-full h-2"><div class="bg-emerald-500 h-2 rounded-full" style="width: 90%"></div></div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between text-sm mb-1.5"><span class="font-semibold text-slate-700"><i class="fa-brands fa-figma text-purple-500 mr-2"></i>UI/UX Design</span><span class="font-bold text-admin-secondary">60%</span></div>
-                        <div class="w-full bg-slate-100 rounded-full h-2"><div class="bg-admin-secondary h-2 rounded-full" style="width: 60%"></div></div>
-                    </div>
+                    <?php if (empty($user_skills)): ?>
+                        <p class="text-sm text-slate-500">Belum ada progress skill yang dicatat.</p>
+                    <?php else: ?>
+                        <?php foreach ($user_skills as $skill): ?>
+                            <?php 
+                                $color = "blue"; 
+                                $icon = "fa-solid fa-code";
+                                if ($skill['progress_persen'] >= 80) $color = "emerald";
+                                elseif ($skill['progress_persen'] <= 40) $color = "orange";
+                            ?>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1.5"><span class="font-semibold text-slate-700"><i class="<?php echo $icon; ?> text-<?php echo $color; ?>-500 mr-2"></i><?php echo htmlspecialchars($skill['nama_skill']); ?></span><span class="font-bold text-<?php echo $color; ?>-500"><?php echo $skill['progress_persen']; ?>%</span></div>
+                                <div class="w-full bg-slate-100 rounded-full h-2"><div class="bg-<?php echo $color; ?>-500 h-2 rounded-full" style="width: <?php echo $skill['progress_persen']; ?>%"></div></div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -275,22 +301,21 @@ $nama_panggilan = isset($_SESSION['username']) ? $_SESSION['username'] : 'Alda';
             <div class="bg-surface rounded-2xl p-6 border border-slate-200 card-shadow flex flex-col">
                 <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 border-b border-slate-100 pb-2">Pengumuman & Notifikasi</h3>
                 <div class="space-y-4 flex-1">
-                    <div class="flex gap-3">
-                        <div class="w-10 h-10 rounded-full bg-blue-50 text-admin-blue flex items-center justify-center shrink-0 border border-blue-100"><i class="fa-solid fa-bullhorn text-sm"></i></div>
-                        <div>
-                            <h4 class="text-sm font-bold text-slate-800 hover:text-admin-blue cursor-pointer">Jadwal Mentoring HIMA</h4>
-                            <p class="text-xs text-slate-500 mt-0.5">Pertemuan divisi internal dijadwalkan ulang besok siang.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-3">
-                        <div class="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-100"><i class="fa-solid fa-check-double text-sm"></i></div>
-                        <div>
-                            <h4 class="text-sm font-bold text-slate-800 hover:text-admin-blue cursor-pointer">Sertifikat Tersedia</h4>
-                            <p class="text-xs text-slate-500 mt-0.5">Sertifikat kursus "Dasar HTML/CSS" sudah bisa diunduh.</p>
-                        </div>
-                    </div>
+                    <?php if (empty($notifications)): ?>
+                        <p class="text-sm text-slate-500">Belum ada pengumuman.</p>
+                    <?php else: ?>
+                        <?php foreach ($notifications as $notif): ?>
+                            <div class="flex gap-3">
+                                <div class="w-10 h-10 rounded-full bg-blue-50 text-admin-blue flex items-center justify-center shrink-0 border border-blue-100"><i class="fa-solid fa-bullhorn text-sm"></i></div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-slate-800 hover:text-admin-blue cursor-pointer"><?php echo htmlspecialchars($notif['judul']); ?></h4>
+                                    <p class="text-xs text-slate-500 mt-0.5"><?php echo htmlspecialchars($notif['isi']); ?></p>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
-                <button class="w-full mt-4 py-2 bg-slate-50 border border-slate-200 text-admin-dark font-bold text-xs rounded-lg hover:bg-slate-100 transition-colors">Lihat Semua</button>
+                <button class="w-full mt-4 py-2 bg-slate-50 border border-slate-200 text-admin-dark font-bold text-xs rounded-lg hover:bg-slate-100 transition-colors" onclick="window.location.href='../notifikasi_pengumuman/index.php'">Lihat Semua</button>
             </div>
         </div>
         
@@ -298,11 +323,15 @@ $nama_panggilan = isset($_SESSION['username']) ? $_SESSION['username'] : 'Alda';
         <div class="mt-8 bg-surface rounded-2xl p-6 border border-slate-200 card-shadow">
             <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 border-b border-slate-100 pb-2">Skill Tracker Detail</h3>
             <div class="flex flex-wrap gap-3">
-                <span class="px-3 py-1.5 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 bg-slate-50 flex items-center gap-2"><i class="fa-brands fa-html5 text-orange-500"></i> HTML5</span>
-                <span class="px-3 py-1.5 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 bg-slate-50 flex items-center gap-2"><i class="fa-brands fa-css3-alt text-blue-500"></i> CSS3</span>
-                <span class="px-3 py-1.5 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 bg-slate-50 flex items-center gap-2"><i class="fa-brands fa-js text-yellow-500"></i> JavaScript</span>
-                <span class="px-3 py-1.5 border border-admin-blue rounded-lg text-sm font-semibold text-admin-blue bg-blue-50 flex items-center gap-2 shadow-sm"><i class="fa-brands fa-laravel text-red-500"></i> Laravel</span>
-                <span class="px-3 py-1.5 border border-admin-blue rounded-lg text-sm font-semibold text-admin-blue bg-blue-50 flex items-center gap-2 shadow-sm"><i class="fa-brands fa-figma text-purple-500"></i> Figma UI/UX</span>
+                <?php if (empty($user_skills)): ?>
+                    <span class="px-3 py-1.5 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 bg-slate-50">Belum ada skill yang dilacak.</span>
+                <?php else: ?>
+                    <?php foreach ($user_skills as $skill): ?>
+                        <span class="px-3 py-1.5 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 bg-slate-50 flex items-center gap-2">
+                            <i class="fa-solid fa-code text-admin-blue"></i> <?php echo htmlspecialchars($skill['nama_skill']); ?>
+                        </span>
+                    <?php endforeach; ?>
+                <?php endif; ?>
                 <button class="px-3 py-1.5 border border-dashed border-slate-300 rounded-lg text-sm font-bold text-slate-400 hover:border-admin-blue hover:text-admin-blue transition-colors flex items-center gap-2"><i class="fa-solid fa-plus"></i> Tambah Log Skill</button>
             </div>
         </div>

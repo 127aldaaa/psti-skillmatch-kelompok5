@@ -34,19 +34,19 @@
         </div>
         
         <div class="sidebar-menu">
-            <a href="#" class="menu-item active"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+            <a href="../../views/dashboard/admin.php" class="menu-item active"><i class="fa-solid fa-gauge"></i> Dashboard</a>
             
             <div class="menu-label">Manajemen Data</div>
-            <a href="#" class="menu-item"><i class="fa-solid fa-bullseye"></i> Data Peminatan</a>
+            <a href="../../manajemen data peminatan/index.php" class="menu-item"><i class="fa-solid fa-bullseye"></i> Data Peminatan</a>
             <a href="../../views/skill/index.php" class="menu-item"><i class="fa-solid fa-code"></i> Data Skill</a>
             <a href="../../views/rekomendasi/index.php" class="menu-item"><i class="fa-solid fa-star"></i> Rekomendasi Skill</a>
-            <a href="../../views/skill_tracker/index.php" class="menu-item"><i class="fa-solid fa-chart-line"></i> Skill Tracker</a>
-            <a href="../../views/progress_skill_tracker/index.php" class="menu-item"><i class="fa-solid fa-spinner"></i> Progress Skill Tracker</a>
-            <a href="#" class="menu-item"><i class="fa-solid fa-file-lines"></i> Soal Tes Minat & Bakat</a>
-            <a href="#" class="menu-item"><i class="fa-solid fa-graduation-cap"></i> Kursus / Pelatihan</a>
+            <a href="../../views/skill_tracker/index.php" class="menu-item"><i class="fa-solid fa-chart-line"></i> Manajemen Skill Tracker</a>
+            <a href="../../views/progress_skill_tracker/index.php" class="menu-item"><i class="fa-solid fa-spinner"></i> Manajemen Progress Skill</a>
+            <a href="../../fitur_tesminatbakat/data_soal.php" class="menu-item"><i class="fa-solid fa-file-lines"></i> Soal Tes Minat & Bakat</a>
+            <a href="../../views/manajemen_kursuspelatihan/kursus.php" class="menu-item"><i class="fa-solid fa-graduation-cap"></i> Kursus / Pelatihan</a>
             
             <div class="menu-label">Komunikasi</div>
-            <a href="#" class="menu-item"><i class="fa-solid fa-bell"></i> Notifikasi / Pengumuman</a>
+            <a href="../../notifikasi_pengumuman/notifikasi.php" class="menu-item"><i class="fa-solid fa-bell"></i> Notifikasi / Pengumuman</a>
             
             <div class="menu-label">Lainnya</div>
             <a href="#" class="menu-item"><i class="fa-solid fa-users"></i> Pengguna</a>

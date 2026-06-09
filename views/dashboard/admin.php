@@ -2,7 +2,9 @@
 require_once '../../config/config.php';
 require_once '../../functions/helper.php';
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Inisialisasi session admin
 if (!isset($_SESSION['user'])) {
@@ -12,6 +14,26 @@ $adminName = $_SESSION['user'];
 
 // Tanggal Dummy
 $dateRange = "25 Mei - 1 Juni 2025";
+
+// Fetch Activity Log
+$sql_activity = "SELECT * FROM activity_log ORDER BY created_at DESC LIMIT 5";
+$res_activity = mysqli_query($conn, $sql_activity);
+$activities = [];
+if ($res_activity) {
+    while($row = mysqli_fetch_assoc($res_activity)) {
+        $activities[] = $row;
+    }
+}
+
+// Fetch Notifikasi
+$sql_notif = "SELECT * FROM notifikasi ORDER BY id DESC LIMIT 3";
+$res_notif = mysqli_query($conn, $sql_notif);
+$notifications = [];
+if ($res_notif) {
+    while($row = mysqli_fetch_assoc($res_notif)) {
+        $notifications[] = $row;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -613,20 +635,19 @@ $dateRange = "25 Mei - 1 Juni 2025";
         </div>
         
         <div class="sidebar-menu">
-            <a href="dashboard/admin.php" class="menu-item active"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+            <a href="admin.php" class="menu-item active"><i class="fa-solid fa-gauge"></i> Dashboard</a>
             
             <div class="menu-label">Manajemen Data</div>
-            <a href="#" class="menu-item"><i class="fa-solid fa-bullseye"></i> Data Peminatan</a>
+            <a href="../../manajemen data peminatan/index.php" class="menu-item"><i class="fa-solid fa-bullseye"></i> Data Peminatan</a>
             <a href="../skill/index.php" class="menu-item"><i class="fa-solid fa-code"></i> Data Skill</a>
-            <a href="../skill_tracker/index.php" class="menu-item"><i class="fa-solid fa-chart-line"></i> Skill Tracker</a>
-            <a href="../progress_skill_tracker/index.php" class="menu-item"><i class="fa-solid fa-spinner"></i> Progress Skill Tracker</a>
-            <a href="#" class="menu-item"><i class="fa-solid fa-file-lines"></i> Soal Tes Minat & Bakat</a>
-
-            <a href="../kursus/kursus.php" class="menu-item">
-            <i class="fa-solid fa-graduation-cap"></i> Kursus / Pelatihan</a>
+            <a href="../rekomendasi/index.php" class="menu-item"><i class="fa-solid fa-star"></i> Rekomendasi Skill</a>
+            <a href="../skill_tracker/index.php" class="menu-item"><i class="fa-solid fa-chart-line"></i> Manajemen Skill Tracker</a>
+            <a href="../progress_skill_tracker/index.php" class="menu-item"><i class="fa-solid fa-spinner"></i> Manajemen Progress Skill</a>
+            <a href="../../fitur_tesminatbakat/data_soal.php" class="menu-item"><i class="fa-solid fa-file-lines"></i> Soal Tes Minat & Bakat</a>
+            <a href="../manajemen_kursuspelatihan/kursus.php" class="menu-item"><i class="fa-solid fa-graduation-cap"></i> Kursus / Pelatihan</a>
             
             <div class="menu-label">Komunikasi</div>
-            <a href="#" class="menu-item"><i class="fa-solid fa-bell"></i> Notifikasi / Pengumuman</a>
+            <a href="../../notifikasi_pengumuman/notifikasi.php" class="menu-item"><i class="fa-solid fa-bell"></i> Notifikasi / Pengumuman</a>
             
             <div class="menu-label">Lainnya</div>
             <a href="#" class="menu-item"><i class="fa-solid fa-users"></i> Pengguna</a>
@@ -864,27 +885,36 @@ $dateRange = "25 Mei - 1 Juni 2025";
                         <h3 class="card-title">Aktivitas Terbaru</h3>
                     </div>
                     <div class="activity-list">
-                        <div class="activity-item">
-                            <div class="activity-icon"><i class="fa-solid fa-user-plus"></i></div>
-                            <div class="activity-content">
-                                <p class="activity-text"><strong>Budi Santoso</strong> mendaftar sebagai pengguna baru.</p>
-                                <span class="activity-time">5 menit yang lalu</span>
+                        <?php if (empty($activities)): ?>
+                            <div class="activity-item">
+                                <div class="activity-content">
+                                    <p class="activity-text">Belum ada aktivitas.</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="activity-item">
-                            <div class="activity-icon green"><i class="fa-solid fa-check-to-slot"></i></div>
-                            <div class="activity-content">
-                                <p class="activity-text"><strong>Siti Aminah</strong> menyelesaikan tes minat dan bakat.</p>
-                                <span class="activity-time">2 jam yang lalu</span>
-                            </div>
-                        </div>
-                        <div class="activity-item">
-                            <div class="activity-icon purple"><i class="fa-solid fa-laptop-code"></i></div>
-                            <div class="activity-content">
-                                <p class="activity-text"><strong>Andi Wijaya</strong> menyelesaikan kursus "Dasar Pemrograman Web".</p>
-                                <span class="activity-time">5 jam yang lalu</span>
-                            </div>
-                        </div>
+                        <?php else: ?>
+                            <?php foreach ($activities as $act): ?>
+                                <?php
+                                    $iconClass = "fa-solid fa-bell";
+                                    $iconColorClass = "";
+                                    if (stripos($act['action'], 'registrasi') !== false) {
+                                        $iconClass = "fa-solid fa-user-plus";
+                                    } elseif (stripos($act['action'], 'tes') !== false) {
+                                        $iconClass = "fa-solid fa-check-to-slot";
+                                        $iconColorClass = "green";
+                                    } elseif (stripos($act['action'], 'kursus') !== false) {
+                                        $iconClass = "fa-solid fa-laptop-code";
+                                        $iconColorClass = "purple";
+                                    }
+                                ?>
+                                <div class="activity-item">
+                                    <div class="activity-icon <?php echo $iconColorClass; ?>"><i class="<?php echo $iconClass; ?>"></i></div>
+                                    <div class="activity-content">
+                                        <p class="activity-text"><strong><?php echo htmlspecialchars($act['user_name']); ?></strong> <?php echo htmlspecialchars($act['description']); ?></p>
+                                        <span class="activity-time"><?php echo date('d M Y H:i', strtotime($act['created_at'])); ?></span>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -894,27 +924,28 @@ $dateRange = "25 Mei - 1 Juni 2025";
                         <h3 class="card-title">Pengumuman Terbaru</h3>
                     </div>
                     <ul class="announcement-list">
-                        <li>
-                            <div class="announcement-date"><span>28</span><small>Mei</small></div>
-                            <div class="announcement-content">
-                                <div class="title">Update Sistem Rekomendasi</div>
-                                <div class="desc">Algoritma rekomendasi diperbarui untuk akurasi yang lebih baik.</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="announcement-date"><span>25</span><small>Mei</small></div>
-                            <div class="announcement-content">
-                                <div class="title">Jadwal Maintenance</div>
-                                <div class="desc">Server akan offline pada 1 Juni 2025 pkl 02:00 WIB.</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="announcement-date"><span>20</span><small>Mei</small></div>
-                            <div class="announcement-content">
-                                <div class="title">Kursus Baru Dirilis</div>
-                                <div class="desc">5 Modul baru untuk Analisis Data telah ditambahkan.</div>
-                            </div>
-                        </li>
+                        <?php if (empty($notifications)): ?>
+                            <li>
+                                <div class="announcement-content">
+                                    <div class="desc">Belum ada pengumuman terbaru.</div>
+                                </div>
+                            </li>
+                        <?php else: ?>
+                            <?php foreach ($notifications as $notif): ?>
+                                <?php 
+                                    $tgl = strtotime($notif['tanggal']);
+                                    $day = date('d', $tgl);
+                                    $month = date('M', $tgl);
+                                ?>
+                                <li>
+                                    <div class="announcement-date"><span><?php echo $day; ?></span><small><?php echo $month; ?></small></div>
+                                    <div class="announcement-content">
+                                        <div class="title"><?php echo htmlspecialchars($notif['judul']); ?></div>
+                                        <div class="desc"><?php echo htmlspecialchars($notif['isi']); ?></div>
+                                    </div>
+                                </li>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </ul>
                 </div>
 
@@ -924,30 +955,42 @@ $dateRange = "25 Mei - 1 Juni 2025";
                         <h3 class="card-title">Quick Access</h3>
                     </div>
                     <div class="quick-access-grid">
-                        <div class="btn-quick">
-                            <i class="fa-solid fa-bullseye"></i>
-                            <span>Kelola Peminatan</span>
-                        </div>
-                        <div class="btn-quick">
-                            <i class="fa-solid fa-code"></i>
-                            <span>Kelola Skill</span>
-                        </div>
-                        <div class="btn-quick">
-                            <i class="fa-solid fa-file-lines"></i>
-                            <span>Kelola Soal Tes</span>
-                        </div>
-                        <div class="btn-quick">
-                            <i class="fa-solid fa-graduation-cap"></i>
-                            <span>Kelola Kursus</span>
-                        </div>
-                        <div class="btn-quick">
-                            <i class="fa-solid fa-bullhorn"></i>
-                            <span>Kelola Pengumuman</span>
-                        </div>
-                        <div class="btn-quick">
-                            <i class="fa-solid fa-chart-pie"></i>
-                            <span>Laporan Sistem</span>
-                        </div>
+                        <a href="../../manajemen data peminatan/index.php" style="text-decoration:none; color:inherit;">
+                            <div class="btn-quick">
+                                <i class="fa-solid fa-bullseye"></i>
+                                <span>Kelola Peminatan</span>
+                            </div>
+                        </a>
+                        <a href="../skill/index.php" style="text-decoration:none; color:inherit;">
+                            <div class="btn-quick">
+                                <i class="fa-solid fa-code"></i>
+                                <span>Kelola Skill</span>
+                            </div>
+                        </a>
+                        <a href="../../fitur_tesminatbakat/data_soal.php" style="text-decoration:none; color:inherit;">
+                            <div class="btn-quick">
+                                <i class="fa-solid fa-file-lines"></i>
+                                <span>Kelola Soal Tes</span>
+                            </div>
+                        </a>
+                        <a href="../manajemen_kursuspelatihan/kursus.php" style="text-decoration:none; color:inherit;">
+                            <div class="btn-quick">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                                <span>Kelola Kursus</span>
+                            </div>
+                        </a>
+                        <a href="../../notifikasi_pengumuman/notifikasi.php" style="text-decoration:none; color:inherit;">
+                            <div class="btn-quick">
+                                <i class="fa-solid fa-bullhorn"></i>
+                                <span>Kelola Pengumuman</span>
+                            </div>
+                        </a>
+                        <a href="#" style="text-decoration:none; color:inherit;">
+                            <div class="btn-quick">
+                                <i class="fa-solid fa-chart-pie"></i>
+                                <span>Laporan Sistem</span>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>

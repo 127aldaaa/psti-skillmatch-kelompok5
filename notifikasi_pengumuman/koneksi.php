@@ -1,6 +1,6 @@
 <?php
 $host = "localhost";
-$db   = "peminatan_db";
+$db   = "skillmatch";
 $user = "root";
 $pass = ""; // default XAMPP kosong
 
